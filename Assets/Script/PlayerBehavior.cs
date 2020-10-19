@@ -18,14 +18,19 @@ public class PlayerBehavior : MonoBehaviour
         inputs = new Inputs();
         inputs.Enable();
         inputs.Perso.Move.performed += OnMovePerformed;
+        inputs.Perso.Move.canceled += OnMoveCanceled;
     }
 
     private void OnMovePerformed(InputAction.CallbackContext obj)
     {
         direction = obj.ReadValue<Vector2>();
 
+    }
 
-        Debug.Log(direction);
+    private void OnMoveCanceled(InputAction.CallbackContext obj)
+    {
+        direction = Vector2.zero;
+
     }
     // Start is called before the first frame update
     void Start()
