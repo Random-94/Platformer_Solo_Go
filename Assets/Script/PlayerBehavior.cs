@@ -76,7 +76,14 @@ public class PlayerBehavior : MonoBehaviour
         var IsRunning = direction.x != 0;
         myAnimator.SetBool("IsRunning", IsRunning);
 
-        if(direction.x < 0)
+        var IsJumping = !IsOnGround && myRigidbody.velocity.y > 0;
+        myAnimator.SetBool("IsJumping", IsJumping);
+
+        var IsFalling = !IsOnGround && myRigidbody.velocity.y < 0;
+        myAnimator.SetBool("IsFalling", IsFalling);
+        myAnimator.SetBool("IsGrounding", IsOnGround);
+
+        if (direction.x < 0)
         {
             myRenderer.flipX = true;
         }
@@ -88,8 +95,9 @@ public class PlayerBehavior : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
+        
         //if(ground == (ground | (1 << other.gameObject.layer)))
-        if(other.gameObject.CompareTag("Ground") == true)
+        if (other.gameObject.CompareTag("Ground"))
         {
             IsOnGround = true;
             
