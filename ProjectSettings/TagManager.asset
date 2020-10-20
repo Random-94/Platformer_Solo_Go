@@ -45,6 +45,15 @@ TagManager:
   - name: Ground
     uniqueID: 3858399063
     locked: 0
-  - name: decors
+  - name: asset
     uniqueID: 3313315063
+    locked: 0
+  - name: asset_reverse
+    uniqueID: 1842634117
+    locked: 0
+  - name: Moon1
+    uniqueID: 3243053019
+    locked: 0
+  - name: Moon2
+    uniqueID: 563083743
     locked: 0
