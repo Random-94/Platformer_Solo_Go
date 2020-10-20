@@ -15,7 +15,7 @@ TagManager:
   - 
   - 
   - Ground
-  - 
+  - decors
   - 
   - 
   - 
@@ -44,4 +44,7 @@ TagManager:
     locked: 0
   - name: Ground
     uniqueID: 3858399063
+    locked: 0
+  - name: decors
+    uniqueID: 3313315063
     locked: 0
