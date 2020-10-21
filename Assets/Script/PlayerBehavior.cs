@@ -35,6 +35,11 @@ public class PlayerBehavior : MonoBehaviour
         myRenderer = GetComponent<SpriteRenderer>();
     }
 
+    private void OnDestroy()
+    {
+        inputs.Disable();
+    }
+
     private void OnMovePerformed(InputAction.CallbackContext obj)
     {
         direction = obj.ReadValue<Vector2>();
