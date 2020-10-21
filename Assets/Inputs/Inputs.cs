@@ -33,6 +33,14 @@ public class @Inputs : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""286074de-e767-4d5f-b930-9a0e5a376917"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -101,6 +109,17 @@ public class @Inputs : IInputActionCollection, IDisposable
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""511005a7-03ac-45a7-a8b3-46173d6741a4"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -111,6 +130,7 @@ public class @Inputs : IInputActionCollection, IDisposable
         m_Perso = asset.FindActionMap("Perso", throwIfNotFound: true);
         m_Perso_Move = m_Perso.FindAction("Move", throwIfNotFound: true);
         m_Perso_Jump = m_Perso.FindAction("Jump", throwIfNotFound: true);
+        m_Perso_Pause = m_Perso.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -162,12 +182,14 @@ public class @Inputs : IInputActionCollection, IDisposable
     private IPersoActions m_PersoActionsCallbackInterface;
     private readonly InputAction m_Perso_Move;
     private readonly InputAction m_Perso_Jump;
+    private readonly InputAction m_Perso_Pause;
     public struct PersoActions
     {
         private @Inputs m_Wrapper;
         public PersoActions(@Inputs wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Perso_Move;
         public InputAction @Jump => m_Wrapper.m_Perso_Jump;
+        public InputAction @Pause => m_Wrapper.m_Perso_Pause;
         public InputActionMap Get() { return m_Wrapper.m_Perso; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -183,6 +205,9 @@ public class @Inputs : IInputActionCollection, IDisposable
                 @Jump.started -= m_Wrapper.m_PersoActionsCallbackInterface.OnJump;
                 @Jump.performed -= m_Wrapper.m_PersoActionsCallbackInterface.OnJump;
                 @Jump.canceled -= m_Wrapper.m_PersoActionsCallbackInterface.OnJump;
+                @Pause.started -= m_Wrapper.m_PersoActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_PersoActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_PersoActionsCallbackInterface.OnPause;
             }
             m_Wrapper.m_PersoActionsCallbackInterface = instance;
             if (instance != null)
@@ -193,6 +218,9 @@ public class @Inputs : IInputActionCollection, IDisposable
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
             }
         }
     }
@@ -201,5 +229,6 @@ public class @Inputs : IInputActionCollection, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
 }
