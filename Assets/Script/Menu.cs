@@ -13,7 +13,7 @@ public class Menu : MonoBehaviour
 
     public void creditsBouton()
     {
-        SceneManager.LoadScene("MyCredits");//Charge la scène de crédits
+        SceneManager.LoadScene("Credit");//Charge la scène de crédits
     }
 
     //Fonction pour le bouton "Quitter"
