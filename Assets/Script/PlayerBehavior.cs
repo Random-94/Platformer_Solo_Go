@@ -30,9 +30,9 @@ public class PlayerBehavior : MonoBehaviour
         inputs.Perso.Move.canceled += OnMoveCanceled;
         inputs.Perso.Jump.performed += OnJumpPerformed;
 
-        myRigidbody = GetComponent<Rigidbody2D>();
+        /*myRigidbody = GetComponent<Rigidbody2D>();
         myAnimator = GetComponent<Animator>();
-        myRenderer = GetComponent<SpriteRenderer>();
+        myRenderer = GetComponent<SpriteRenderer>();*/
     }
 
     private void OnDestroy()
@@ -65,7 +65,10 @@ public class PlayerBehavior : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        Time.timeScale = 1f;
+        myRigidbody = GetComponent<Rigidbody2D>();
+        myAnimator = GetComponent<Animator>();
+        myRenderer = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
