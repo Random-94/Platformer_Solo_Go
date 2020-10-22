@@ -8,9 +8,11 @@ using UnityEngine.SceneManagement;
 public class collectible : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI Score;
+    [SerializeField] private TextMeshProUGUI Victoire;
+
     // on créé une variable qui apparait dans l'inspector pour afficher le score
     private int ScoreValue;
-    //private bool ScoreFinal = 15;
+    //private int ScoreFinal = 15;
     // autre variable "valeur du score" nombre entier "int"
 
 
