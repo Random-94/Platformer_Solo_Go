@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class collectible : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI Score;
     // on créé une variable qui apparait dans l'inspector pour afficher le score
     private int ScoreValue;
+    //private bool ScoreFinal = 15;
     // autre variable "valeur du score" nombre entier "int"
 
 
@@ -45,5 +47,10 @@ public class collectible : MonoBehaviour
             ScoreValue = ScoreValue +1;
             */
         }
+
+        /*if (ScoreValue = ScoreFinal)
+        {
+
+        }*/
     }
 }
