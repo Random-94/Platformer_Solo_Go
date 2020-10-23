@@ -9,30 +9,30 @@ using UnityEngine.SceneManagement;
 
 public class PlayerBehavior : MonoBehaviour
 {
-    [SerializeField] private float speed;
-    [SerializeField] private float maxSpeed;
-    [SerializeField] private float JumpForce;
-    [SerializeField] private LayerMask ground;
+    [SerializeField] private float speed; // on cree une variable modifiable dans l'inspector pour modifier la vitesse du personnage
+    [SerializeField] private float maxSpeed;// on cree une variable modifiable dans l'inspector pour modifier la vitesse max du personnage
+    [SerializeField] private float JumpForce;// on cree une variable modifiable dans l'inspector pour modifier la force du saut du personnage
+    [SerializeField] private LayerMask ground;// on cree une variable modifiable dans l'inspector
 
-    private Inputs inputs;
-    private Vector2 direction;
+    private Inputs inputs;// on cree une variable pour les inputs d'actions du personnage
+    private Vector2 direction;// on cree une variable pour la direction du personnage
 
-    private Rigidbody2D myRigidbody;
-    private Animator myAnimator;
-    private SpriteRenderer myRenderer;
+    private Rigidbody2D myRigidbody;// on cree une variable pour modifier le rigidbody du personnage
+    private Animator myAnimator;// on cree une variable pour l'animation du personnage
+    private SpriteRenderer myRenderer;// on cree une variable pour modifier le sprite qui va etre affiché pendant les animations
 
-    private bool IsOnGround = false;
+    private bool IsOnGround = false;// on cree une variable booleenne qu'on déclare "faux"
 
-    private int ScoreValue;
-    private int ScoreFinal;
+    private int ScoreValue; // on cree une variable pour le score
+    private int ScoreFinal;// on cree une variable pour le score final du joueur
 
     private void OnEnable()
     {
-        inputs = new Inputs();
-        inputs.Enable();
-        inputs.Perso.Move.performed += OnMovePerformed;
-        inputs.Perso.Move.canceled += OnMoveCanceled;
-        inputs.Perso.Jump.performed += OnJumpPerformed;
+        inputs = new Inputs(); // //on instancie l'input system créé dans Unity
+        inputs.Enable(); //on instancie l'input system créé dans Unity
+        inputs.Perso.Move.performed += OnMovePerformed;//quand on appuie sur les inputs de l'action Move de l'action Map player, on lance la fonction OnMovePerformed
+        inputs.Perso.Move.canceled += OnMoveCanceled;//quand on arrête d'appuyer sur les inputs de l'action Move de l'action Map player, on lance la fonction OnMoveCanceled
+        inputs.Perso.Jump.performed += OnJumpPerformed;//quand on appuie sur les inputs de l'action Jump de l'action Map player, on lance la fonction OnJumpPerformed
 
         /*myRigidbody = GetComponent<Rigidbody2D>();
         myAnimator = GetComponent<Animator>();
@@ -41,7 +41,7 @@ public class PlayerBehavior : MonoBehaviour
 
     private void OnDestroy()
     {
-        inputs.Disable();
+        inputs.Disable(); //on demande de déinstancier l'input system créé dans Unity
     }
 
     private void OnMovePerformed(InputAction.CallbackContext obj)
@@ -80,10 +80,12 @@ public class PlayerBehavior : MonoBehaviour
     {
         
         direction.y = 0;
-      
+
 
         if (myRigidbody.velocity.sqrMagnitude < maxSpeed)
-            myRigidbody.AddForce(direction*speed);
+        {
+            myRigidbody.AddForce(direction * speed);
+        }
 
         var IsRunning = direction.x != 0;
         myAnimator.SetBool("IsRunning", IsRunning);

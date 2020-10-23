@@ -12,7 +12,7 @@ public class collectible : MonoBehaviour
 
     // on créé une variable qui apparait dans l'inspector pour afficher le score
     public int ScoreValue;
-    public int ScoreFinal = 14;
+    public int ScoreFinal = 15;
     // autre variable "valeur du score" nombre entier "int"
 
 
@@ -24,7 +24,7 @@ public class collectible : MonoBehaviour
 
     void Update()
     {
-        Score.text = "Score : " + ScoreValue;
+        Score.text = "Score : " + ScoreValue + "/15";
         // le compteur affiche "score : + la valeur de ScoreValue
 
     }
