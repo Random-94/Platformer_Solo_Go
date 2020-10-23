@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 
 public class PlayerBehavior : MonoBehaviour
@@ -21,6 +22,9 @@ public class PlayerBehavior : MonoBehaviour
     private SpriteRenderer myRenderer;
 
     private bool IsOnGround = false;
+
+    private int ScoreValue;
+    private int ScoreFinal;
 
     private void OnEnable()
     {
@@ -99,7 +103,16 @@ public class PlayerBehavior : MonoBehaviour
         {
             myRenderer.flipX = false;
         }
+
+        var PlayerGameObject = GameObject.FindWithTag("Player");
+        var CollectiblesScript = PlayerGameObject.GetComponent<collectible>();
+
+        ScoreValue = CollectiblesScript.ScoreValue;
+        ScoreFinal = CollectiblesScript.ScoreFinal;
+
     }
+
+    
 
     private void OnCollisionEnter2D(Collision2D other)
     {
@@ -109,6 +122,12 @@ public class PlayerBehavior : MonoBehaviour
         {
             IsOnGround = true;
             
+        }
+
+        if(ScoreValue == ScoreFinal && other.gameObject.CompareTag("Fin"))
+        {
+            SceneManager.LoadScene("Fin", LoadSceneMode.Single);
+            Debug.Log("oh");
         }
     }
 

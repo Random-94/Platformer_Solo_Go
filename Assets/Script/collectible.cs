@@ -8,11 +8,11 @@ using UnityEngine.SceneManagement;
 public class collectible : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI Score;
-    [SerializeField] private TextMeshProUGUI Victoire;
+    [SerializeField] private GameObject Victoire;
 
     // on créé une variable qui apparait dans l'inspector pour afficher le score
-    private int ScoreValue;
-    //private int ScoreFinal = 15;
+    public int ScoreValue;
+    public int ScoreFinal = 14;
     // autre variable "valeur du score" nombre entier "int"
 
 
@@ -34,7 +34,7 @@ public class collectible : MonoBehaviour
     // other on peut l'appeller comme on veut
     {
 
-        Debug.Log("tu as récupéré un Coin!");
+        //Debug.Log("tu as récupéré un Coin!");
         // on affiche un message dans la console, quand la fonction est vérifié
         // le compteur fonctionne et il affiche "pumpkin detected" dans la console
 
@@ -50,9 +50,9 @@ public class collectible : MonoBehaviour
             */
         }
 
-        /*if (ScoreValue = ScoreFinal)
+        if (ScoreValue == ScoreFinal)
         {
-
-        }*/
+            Instantiate(Victoire);
+        }
     }
 }
