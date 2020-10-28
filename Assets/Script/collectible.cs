@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using UnityEngine.SceneManagement;
+using UnityEngine.SceneManagement;// on rajoute le namespace scenemanagement pour gérer le changement de scene
 
 public class collectible : MonoBehaviour
 {

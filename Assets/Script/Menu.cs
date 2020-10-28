@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.SceneManagement;// on rajoute le namespace scenemanagement pour gérer le changement de scene
 
 public class Menu : MonoBehaviour
 {

@@ -30,9 +30,9 @@ public class PlayerBehavior : MonoBehaviour
     {
         inputs = new Inputs(); // //on instancie l'input system créé dans Unity
         inputs.Enable(); //on instancie l'input system créé dans Unity
-        inputs.Perso.Move.performed += OnMovePerformed;//quand on appuie sur les inputs de l'action Move de l'action Map player, on lance la fonction OnMovePerformed
-        inputs.Perso.Move.canceled += OnMoveCanceled;//quand on arrête d'appuyer sur les inputs de l'action Move de l'action Map player, on lance la fonction OnMoveCanceled
-        inputs.Perso.Jump.performed += OnJumpPerformed;//quand on appuie sur les inputs de l'action Jump de l'action Map player, on lance la fonction OnJumpPerformed
+        inputs.Perso.Move.performed += OnMovePerformed;//quand on appuie sur les inputs de l'action Move de l'action Map Perso, on lance la fonction OnMovePerformed
+        inputs.Perso.Move.canceled += OnMoveCanceled;//quand on arrête d'appuyer sur les inputs de l'action Move de l'action Map Perso, on lance la fonction OnMoveCanceled
+        inputs.Perso.Jump.performed += OnJumpPerformed;//quand on appuie sur les inputs de l'action Jump de l'action Map Perso, on lance la fonction OnJumpPerformed
 
         /*myRigidbody = GetComponent<Rigidbody2D>();
         myAnimator = GetComponent<Animator>();
@@ -46,18 +46,20 @@ public class PlayerBehavior : MonoBehaviour
 
     private void OnMovePerformed(InputAction.CallbackContext obj)
     {
-        direction = obj.ReadValue<Vector2>();
+        direction = obj.ReadValue<Vector2>(); //la variable direction recupère la position (-1, 0 ou 1) des inputs enclenchés
 
     }
 
     private void OnMoveCanceled(InputAction.CallbackContext obj)
     {
-        direction = Vector2.zero;
+        direction = Vector2.zero; //quand on arrête d'appuyer sur les inputs, on fait en sorte que le personnage ne reçoive plus aucune force pour qu'il arrête d'avancer
 
     }
 
     private void OnJumpPerformed(InputAction.CallbackContext obj)
     {
+        //si le bool IsOnGround est vrai, on ajoute une force (JumpForce) vers le haut sur le player
+        //puis on repasse le booléen a faux pour arrêter d'ajouter la force même si on continue d'enclencher l'input
         if (IsOnGround)
         {
             myRigidbody.AddForce(Vector2.up * JumpForce, ForceMode2D.Impulse);
@@ -70,34 +72,35 @@ public class PlayerBehavior : MonoBehaviour
     void Start()
     {
         Time.timeScale = 1f;
-        myRigidbody = GetComponent<Rigidbody2D>();
-        myAnimator = GetComponent<Animator>();
-        myRenderer = GetComponent<SpriteRenderer>();
+        myRigidbody = GetComponent<Rigidbody2D>();//on récupère le Rigidbody2D du Player pour pouvoir agir dessus
+        myAnimator = GetComponent<Animator>();// on recupère le composant animator
+        myRenderer = GetComponent<SpriteRenderer>();// on recupère le composant sprite renderer
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
         
-        direction.y = 0;
+        direction.y = 0;//on fait en sorte que le Player ne puisse se deplacer que sur l'axe x
 
-
+        //Tant que la vitesse de déplacement du player n'est pas superieure à maxSpeed, on lui ajoute une force en fonction des inputs enclenchés
         if (myRigidbody.velocity.sqrMagnitude < maxSpeed)
         {
             myRigidbody.AddForce(direction * speed);
         }
 
-        var IsRunning = direction.x != 0;
+
+        var IsRunning = direction.x != 0;// on lance l'animation isrunning dès que le personnage est en mouvement
         myAnimator.SetBool("IsRunning", IsRunning);
 
-        var IsJumping = !IsOnGround && myRigidbody.velocity.y > 0;
+        var IsJumping = !IsOnGround && myRigidbody.velocity.y > 0;//on lance l'animation isjumping et isfalling dès que le personnage est en mouvement sur l'axe y
         myAnimator.SetBool("IsJumping", IsJumping);
 
         var IsFalling = !IsOnGround && myRigidbody.velocity.y < 0;
         myAnimator.SetBool("IsFalling", IsFalling);
         myAnimator.SetBool("IsGrounding", IsOnGround);
 
-        if (direction.x < 0)
+        if (direction.x < 0)//on change l'orientatino du sprite en fonction de sa direction
         {
             myRenderer.flipX = true;
         }
@@ -106,8 +109,8 @@ public class PlayerBehavior : MonoBehaviour
             myRenderer.flipX = false;
         }
 
-        var PlayerGameObject = GameObject.FindWithTag("Player");
-        var CollectiblesScript = PlayerGameObject.GetComponent<collectible>();
+        var PlayerGameObject = GameObject.FindWithTag("Player"); //je cree une variable "PlayerGameObject" dans lequel je lui demande d'aller comparer son tag avec Player
+        var CollectiblesScript = PlayerGameObject.GetComponent<collectible>(); //je cree une variable "CollectiblesScript" et je lui demande d'aller chercher sur le perso le component "collectible" qui correspond au script
 
         ScoreValue = CollectiblesScript.ScoreValue;
         ScoreFinal = CollectiblesScript.ScoreFinal;
@@ -118,15 +121,16 @@ public class PlayerBehavior : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        
-        //if(ground == (ground | (1 << other.gameObject.layer)))
+
+        //si le Player collisionne avec un GameObject qui a le tag "Ground" le booléen IsOnGround passe en true pour que le Player puisse sauter
         if (other.gameObject.CompareTag("Ground"))
         {
             IsOnGround = true;
             
         }
 
-        if(ScoreValue == ScoreFinal && other.gameObject.CompareTag("Fin"))
+        //si le Player collisionne avec un GameObject qui a le tag "Fin" et que le score final atteint un nombre determiné , on lance la scene "fin"
+        if (ScoreValue == ScoreFinal && other.gameObject.CompareTag("Fin"))
         {
             SceneManager.LoadScene("Fin", LoadSceneMode.Single);
             Debug.Log("oh");

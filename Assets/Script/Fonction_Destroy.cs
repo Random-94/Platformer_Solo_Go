@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Fonction_Destroy : MonoBehaviour
 {
-    public void Destroy()
+    public void Destroy() // permet de detruire l'object où se trouve le script apres son utilisation
     {
-        Destroy(gameObject);
+        Destroy(gameObject); 
     }
 
     // Start is called before the first frame update

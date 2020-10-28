@@ -4,7 +4,7 @@ using System;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
+using UnityEngine.SceneManagement;// on rajoute le namespace scenemanagement pour gérer le changement de scene
 
 public class Credit : MonoBehaviour
 {
